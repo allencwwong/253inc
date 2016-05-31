@@ -1,7 +1,15 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-6">
       <h1>253 Inventory App</h1>
+    </div>
+    <div class="col-xs-3">
+      <a href="inventories/new"><button class="btn btn-primary mt10 color-white"><h4>Add</h4></button></a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
       <table class="table table-hover">
         <tr>
           <th>Order Date</th>
@@ -10,8 +18,18 @@
           <th>Due Date</th>
           <th>Time Elasped</th>
         </tr>
-        <tr><td>a</td></tr>
-        <tr><td>b</td></tr>
+        <% @inventory.each do | job | %>
+
+        <tr>
+          <td><%= job.order_date %></td>
+          <td><%=job.progress %></td>
+          <td><%=job.order_list %></td>
+          <td><%=job.due_date %></td>
+          <td>N/A</td>
+
+        </tr>
+
+        <% end %>
       </table>
     </div>
   </div>
