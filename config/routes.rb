@@ -11,5 +11,5 @@ Rails.application.routes.draw do
   end
 end
   resources :inventories
-
+  resources :sales
 end
