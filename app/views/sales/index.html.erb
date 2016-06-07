@@ -1,0 +1,73 @@
+<% if current_user %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-4">
+      <h1>253 Sales </h1>
+    </div>
+    <div class="col-xs-3">
+      <a href="#"><button class="btn btn-primary mt10 color-white"><h4>Add</h4></button></a>
+    </div>
+    <div class="col-xs-5 mt30">
+      Welcome, <%= current_user.email %>
+      <%= link_to "Sign Out", "/users/sign_out", method: :delete %>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">Today Sales</div>
+        <div class="panel-body">
+          
+          <h1><%= "$#{@sale_today}" %></h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">Today Quotes</div>
+        <div class="panel-body">$1000.00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table table-hover">
+        <tr>
+          <th>Date</th>
+          <th>Sale No.</th>
+          <th>By</th>
+          <th>Customer</th>
+          <th>Amount</th>
+          <th>Quote No.</th>
+          <th>Amount</th>
+          <th>Type</th>
+          <th>Due Date</th>
+          <th>Payment</th>
+
+        </tr>
+        <% @sales.each do | sale | %>
+
+        <tr>
+          <%=  %>
+          <td><%= Date.parse(sale.date.to_s) %></td>
+          <td><%=sale.sale_number %></td>
+          <td><%=sale.by %></td>
+          <td><%=sale.customer %></td>
+          <td><%="$#{sale.amount}" %></td>
+          <td><%=sale.quote_number %></td>
+          <td><%=sale.product_type %></td>
+          <td><%=sale.due_date %></td>
+          <td><%=sale.payment %></td>
+          <td><%=sale.note %></td>
+        </tr>
+
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+
+<% end %>

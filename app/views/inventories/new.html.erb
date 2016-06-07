@@ -11,7 +11,7 @@
           <%= label_tag :order_date %>
           </div>
         </td>
-        <td><%= text_field_tag :order_date%></td>
+        <td><%= text_field_tag :order_date , "#{DateTime.now.to_date}", class: "form-control"%></td>
       </tr>
       
       <tr>
@@ -35,3 +35,6 @@
       <% end %>
 
     </table>
+    </div>
+  </div>
+</div>

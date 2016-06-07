@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>Add New Sale </h1>
+
+        <%= form_tag '/sales', method: :post do %>
+          <table class="table table-hover">
+      <tr>    
+        <td><%= label_tag :Date %><%= text_field_tag :date , "#{DateTime.now.to_date}", class: "form-control"%></td>
+      </tr>
+      
+      <tr>    
+        <td><%= label_tag :By %><%= text_field_tag :by , nil, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :Customer %><%= text_field_tag :customer , nil, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :Sale_No %><%= text_field_tag :sale_no , nil, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :Amount %><%= text_field_tag :amount , nil, class: "form-control"%></td>
+      </tr>
+      
+      <tr>
+        <td><%= submit_tag "Add Sale" %></td>
+      </tr>  
+  
+      <% end %>
+
+    </table>
+    </div>
+  </div>
+</div>    
