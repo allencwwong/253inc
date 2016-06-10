@@ -6,7 +6,6 @@ class SalesController < ApplicationController
     @sale_today = 0;
     @quote_today = 0;
 
-    # User.find(:all, :conditions => { :country => 'canada' })
     if(params[:view] === "today")
        @sales = Sale.where(:date => Date.today)
     end
