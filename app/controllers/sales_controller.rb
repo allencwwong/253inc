@@ -1,17 +1,26 @@
 class SalesController < ApplicationController
-  
+  puts Time.now.month
   def index
     
     @sales = Sale.all
     @sale_today = 0;
     @quote_today = 0;
 
+    today_day = Date.today.wday
+    today_week_start = Date.today-today_day
+    today_week_end = today_week_start + 6
+
+
     if(params[:view] === "today")
-       @sales = Sale.where(:date => Date.today)
+       @sales = Sale.where("date in (?)", Date.today)
     end
 
     if(params[:view] === "weekly")
-        @sales = Sale.where(:date => Date.today-1..Date.today)
+        @sales = Sale.where("date in (?)", today_week_start..today_week_end)
+    end
+
+    if(params[:view] === "monthly")
+      @sales = Sale.where("extract(month from date) = ?",Time.now.month)
     end
 
     @sales.each do |sale|
