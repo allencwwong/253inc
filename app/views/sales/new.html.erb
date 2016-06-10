@@ -10,6 +10,14 @@
       </tr>
       
       <tr>    
+        <td><%= label_tag :order_type %><%= text_field_tag :order_type , nil, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :Amount %><%= text_field_tag :amount , nil, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
         <td><%= label_tag :By %><%= text_field_tag :by , nil, class: "form-control"%></td>
       </tr>
 
@@ -18,13 +26,9 @@
       </tr>
 
       <tr>    
-        <td><%= label_tag :Sale_No %><%= text_field_tag :sale_no , nil, class: "form-control"%></td>
+        <td><%= label_tag :due_date %><%= text_field_tag :due_date, nil, class: "form-control"%></td>
       </tr>
 
-      <tr>    
-        <td><%= label_tag :Amount %><%= text_field_tag :amount , nil, class: "form-control"%></td>
-      </tr>
-      
       <tr>
         <td><%= submit_tag "Add Sale" %></td>
       </tr>  

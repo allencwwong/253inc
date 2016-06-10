@@ -1,4 +1,8 @@
 <% if current_user %>
+<%= Time.now.strftime('%V') %>
+<%= Time.now.strftime('%U') %>
+<%= Time.now.strftime('%W') %>
+<%= Date.at_beginning_of_week %>
 <div id="index">
 <nav id="subNav" class="navbar navbar-default">
   <div class="container">
@@ -9,9 +13,9 @@
 <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by: Dropdown<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">All</a></li>
-            <li><a href="#">Today</a></li>
-            <li><a href="#">Weekly</a></li>
+            <li><a href="?view=all">All</a></li>
+            <li><a href="?view=today">Today</a></li>
+            <li><a href="?view=weekly">Weekly</a></li>
             <li><a href="#">Monthly</a></li>
             <li><a href="#">Year to Date</a></li>
           </ul>
@@ -29,15 +33,14 @@
       <div class="panel panel-default">
         <div class="panel-heading">Today Sales</div>
         <div class="panel-body">
-          
-          <h1><%= "$#{@sale_today}" %></h1>
+          <h1 class="center"><%= "$#{@sale_today}" %></h1>
         </div>
       </div>
     </div>
     <div class="col-xs-3">
       <div class="panel panel-default">
         <div class="panel-heading">Today Quotes</div>
-        <div class="panel-body">$1000.00</div>
+        <div class="panel-body"><h1 class="center"><%= "$#{@quote_today}" %></h1></div>
       </div>
     </div>
     <div class="col-xs-3">
@@ -59,11 +62,9 @@
       <table class="table table-hover">
         <tr>
           <th>Date</th>
-          <th>Sale No.</th>
+          <th>Order Type</th>
           <th>By</th>
           <th>Customer</th>
-          <th>Amount</th>
-          <th>Quote No.</th>
           <th>Amount</th>
           <th>Type</th>
           <th>Due Date</th>
@@ -75,11 +76,10 @@
         <tr>
           <%=  %>
           <td><%= Date.parse(sale.date.to_s) %></td>
-          <td><%=sale.sale_number %></td>
+          <td><%= sale.order_type %></td>
           <td><%=sale.by %></td>
           <td><%=sale.customer %></td>
           <td><%="$#{sale.amount}" %></td>
-          <td><%=sale.quote_number %></td>
           <td><%=sale.product_type %></td>
           <td><%=sale.due_date %></td>
           <td><%=sale.payment %></td>

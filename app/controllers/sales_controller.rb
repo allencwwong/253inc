@@ -4,36 +4,51 @@ class SalesController < ApplicationController
     
     @sales = Sale.all
     @sale_today = 0;
-    @sales.each do |sale|
-      puts Date.parse(sale.date.to_s).to_s
-      puts DateTime.now.strftime("%Y-%m-%d").to_s
-      
-      if Date.parse(sale.date.to_s).to_s === DateTime.now.strftime("%Y-%m-%d").to_s
-        @sale_today+= sale.amount
-      end
+    @quote_today = 0;
+
+    # User.find(:all, :conditions => { :country => 'canada' })
+    if(params[:view] === "today")
+       @sales = Sale.where(:date => Date.today)
     end
 
-  end
+    if(params[:view] === "weekly")
+        @sales = Sale.where(:date => Date.today-1..Date.today)
+    end
+
+    @sales.each do |sale|
+      
+      if Date.parse(sale.date.to_s).to_s === DateTime.now.strftime("%Y-%m-%d").to_s && sale.order_type === "sales"
+          @sale_today+= sale.amount
+      end
+
+      if Date.parse(sale.date.to_s).to_s === DateTime.now.strftime("%Y-%m-%d").to_s && sale.order_type === "quote"
+        @quote_today+= sale.amount
+      end    
+      
+    end
+
+  end #end of index
 
   def new
   end
 
   def create
     @date = params[:date] 
-    @sale_no = params[:sale_no]
     @by = params[:by] 
     @customer = params[:customer]
-    @amount = params[:amount]
-    @quote_no = params[:quote_no]
-    @q_amount = params[:q_amount]
     @p_type = params[:p_type]
     @due_date = params[:due_date]
     @note = params[:note]
-  
-    @sale = Sale.create(date: @date, sale_number: @sale_no, by: @by, customer: @customer, amount: @amount, quote_number: @quote_no, product_type: @p_type, due_date: @due_date, note: @note)
     
+    @order_type = params[:order_type]
+    @amount = params[:amount]
+  
+
+    @sale = Sale.create(date: @date, by: @by, customer: @customer, product_type: @p_type, due_date: @due_date, note: @note, order_type: @order_type,amount: @amount)
+
+
     if @sale.save 
-    redirect_to "/sales"
+      redirect_to "/sales"
       else
         render :new
     end
