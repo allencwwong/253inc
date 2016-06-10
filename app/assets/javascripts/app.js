@@ -2,8 +2,9 @@ var ready;
 
 ready = function(){
 
-
-  
+$('#dropdown-time li').on('click', function(){
+    $('#sort-time').val($(this).text());
+});
 
 }; // end
 

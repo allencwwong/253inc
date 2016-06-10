@@ -1,18 +1,20 @@
 class SalesController < ApplicationController
   def index
-    
-   
-    @sale_today = 0;
-    @quote_today = 0;
+    puts params[:other_param]
 
     today_day = Date.today.wday
     today_week_start = Date.today-today_day
     today_week_end = today_week_start + 6
 
-    def Weekly_Amount(weekNum,wStart,wEnd,orderType)
+    def sale_amount_sum(orderType,date,wStart,wEnd)
       amount = 0
-      @sales = Sale.where("date in (?)", wStart..wEnd)
       
+      if wStart === nil
+        @sales = Sale.where("date in (?)",Date.today)
+      elsif wStart
+        @sales = Sale.where("date in (?)", wStart..wEnd)
+      end
+
       @sales.each do |sale|
         if(sale.order_type === orderType)
           amount+= sale.amount
@@ -23,37 +25,53 @@ class SalesController < ApplicationController
     end
 
 
-    sale_today_date = DateTime.now.strftime("%Y-%m-%d")
-    @weekly_sales_amount = Weekly_Amount(Time.now.wday,today_week_start,today_week_end,"sales")
-    @weekly_quotes_amount = Weekly_Amount(Time.now.wday,today_week_start,today_week_end,"quote")
+    @daily_sales_amount = sale_amount_sum("sales",Date.today,nil,nil)
+    @daily_quotes_amount = sale_amount_sum("quote",Date.today,nil,nil)
+    @weekly_sales_amount = sale_amount_sum("sales",Time.now.wday,today_week_start,today_week_end)
+    @weekly_quotes_amount = sale_amount_sum("quote",Time.now.wday,today_week_start,today_week_end)
 
-    if(params[:view] === "all" || "")
-       @sales = Sale.all
-    end
-
-    if(params[:view] === "today")
-       @sales = Sale.where("date in (?)", Date.today)
-    end
-
-    if(params[:view] === "weekly")
-        @sales = Sale.where("date in (?)", today_week_start..today_week_end)
-    end
-
-    if(params[:view] === "monthly")
-      @sales = Sale.where("extract(month from date) = ?",Time.now.month)
-    end
-
-    @sales.each do |sale|
+    def sort_displayer(view,orderType)
+      today_day = Date.today.wday
+      today_week_start = Date.today-today_day
+      today_week_end = today_week_start + 6
       
-      if Date.parse(sale.date.to_s).to_s === sale_today_date.to_s && sale.order_type === "sales"
-          @sale_today+= sale.amount
+      if view === "all" || view === "" && orderType === "all" || orderType === ""
+        @sales = Sale.all
+      elsif view === "today" && orderType === "all" || orderType === ""
+        @sales = Sale.where("date in (?)" , Date.today)  
+      elsif view === "today" && orderType === "sales"
+        @sales = Sale.where("date in (?) and order_type =?" , Date.today, orderType)
+      elsif view === "weekly" && orderType === "sales"
+        @sales = Sale.where("date in (?) and order_type =?" , today_week_start..today_week_end , orderType)
+      elsif view === "today" && orderType === "quotes"
+        @sales = Sale.where("date in (?) and order_type =?" , Date.today, "quote") 
+      elsif view === "weekly" && orderType === "quotes"
+        @sales = Sale.where("date in (?) and order_type =?" , today_week_start..today_week_end, "quote")
+      elsif view === "monthly" && orderType === "sales"
+        @sales = Sale.where("extract(month from date) = ? and order_type =?",Time.now.month,"sales") 
+      elsif view === "monthly" && orderType === "quotes"
+        @sales = Sale.where("extract(month from date) = ? and order_type =?",Time.now.month,"quote")
       end
-
-      if Date.parse(sale.date.to_s).to_s === sale_today_date.to_s && sale.order_type === "quote"
-        @quote_today+= sale.amount
-      end    
-      
     end
+
+    sort_displayer(params[:view],params[:order_type])
+
+    # if(params[:view] === "all" || "")
+    #    @sales = Sale.all
+    # end
+
+    # if(params[:view] === "today")
+    #    @sales = Sale.where("date in (?)", Date.today)
+    # end
+
+    # if(params[:view] === "weekly")
+    #     @sales = Sale.where("date in (?)", today_week_start..today_week_end)
+    # end
+
+    # if(params[:view] === "monthly")
+    #   @sales = Sale.where("extract(month from date) = ?",Time.now.month)
+    # end
+
 
   end #end of index
 
@@ -81,6 +99,10 @@ class SalesController < ApplicationController
         render :new
     end
   
+  end
+
+  def store_params
+
   end
 
 
