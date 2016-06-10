@@ -1,8 +1,7 @@
 class SalesController < ApplicationController
-  puts Time.now.month
   def index
     
-    @sales = Sale.all
+   
     @sale_today = 0;
     @quote_today = 0;
 
@@ -10,6 +9,27 @@ class SalesController < ApplicationController
     today_week_start = Date.today-today_day
     today_week_end = today_week_start + 6
 
+    def Weekly_Amount(weekNum,wStart,wEnd,orderType)
+      amount = 0
+      @sales = Sale.where("date in (?)", wStart..wEnd)
+      
+      @sales.each do |sale|
+        if(sale.order_type === orderType)
+          amount+= sale.amount
+        end
+      end
+      
+      return amount
+    end
+
+
+    sale_today_date = DateTime.now.strftime("%Y-%m-%d")
+    @weekly_sales_amount = Weekly_Amount(Time.now.wday,today_week_start,today_week_end,"sales")
+    @weekly_quotes_amount = Weekly_Amount(Time.now.wday,today_week_start,today_week_end,"quote")
+
+    if(params[:view] === "all" || "")
+       @sales = Sale.all
+    end
 
     if(params[:view] === "today")
        @sales = Sale.where("date in (?)", Date.today)
@@ -25,11 +45,11 @@ class SalesController < ApplicationController
 
     @sales.each do |sale|
       
-      if Date.parse(sale.date.to_s).to_s === DateTime.now.strftime("%Y-%m-%d").to_s && sale.order_type === "sales"
+      if Date.parse(sale.date.to_s).to_s === sale_today_date.to_s && sale.order_type === "sales"
           @sale_today+= sale.amount
       end
 
-      if Date.parse(sale.date.to_s).to_s === DateTime.now.strftime("%Y-%m-%d").to_s && sale.order_type === "quote"
+      if Date.parse(sale.date.to_s).to_s === sale_today_date.to_s && sale.order_type === "quote"
         @quote_today+= sale.amount
       end    
       
