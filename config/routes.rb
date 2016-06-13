@@ -12,4 +12,5 @@ Rails.application.routes.draw do
 end
   resources :inventories
   resources :sales
+  resources :quotes
 end

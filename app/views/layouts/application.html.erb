@@ -24,11 +24,11 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="/">Quotes <span class="badge">42</span></a></li>
-        <li class="active"><a href="/sales?view=all&amp;order_type=sales">Sales <span class="sr-only">(current)</span> <span class="badge"><%= @total_sales %></span></a></li>
-        <li><a href="/">Working <span class="badge">42</span></a></li>
-        <li><a href="/">Completed <span class="badge">42</span></a></li>
+      <ul id="main-nav" class="nav navbar-nav">
+        <li><a href="/quotes?view=all&amp;order_type=quotes">Quotes <span class="badge"><%= @total_quotes %></span></a></li>
+        <li ><a href="/sales?view=all&amp;order_type=sales">Sales <span class="badge"><%= @total_sales %></span></a></li>
+        <li><a href="/">Working <span class="badge">0</span></a></li>
+        <li><a href="/">Completed <span class="badge">0</span></a></li>
         <!-- <li><a href="/">Inventory</a></li> -->
         
       </ul>

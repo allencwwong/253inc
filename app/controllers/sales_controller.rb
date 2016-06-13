@@ -1,5 +1,6 @@
 class SalesController < ApplicationController
   def index
+    @total_quotes = Sale.where("order_type =?","quote").count()
     @total_sales = Sale.where("order_type =?","sales").count()
 
     today_day = Date.today.wday
