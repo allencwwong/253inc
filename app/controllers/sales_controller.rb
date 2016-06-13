@@ -1,6 +1,6 @@
 class SalesController < ApplicationController
   def index
-    puts params[:other_param]
+    @total_sales = Sale.where("order_type =?","sales").count()
 
     today_day = Date.today.wday
     today_week_start = Date.today-today_day
@@ -35,22 +35,22 @@ class SalesController < ApplicationController
       today_week_start = Date.today-today_day
       today_week_end = today_week_start + 6
       
-      if view === "all" || view === "" && orderType === "all" || orderType === ""
-        @sales = Sale.all
-      elsif view === "today" && orderType === "all" || orderType === ""
-        @sales = Sale.where("date in (?)" , Date.today)  
-      elsif view === "today" && orderType === "sales"
-        @sales = Sale.where("date in (?) and order_type =?" , Date.today, orderType)
-      elsif view === "weekly" && orderType === "sales"
-        @sales = Sale.where("date in (?) and order_type =?" , today_week_start..today_week_end , orderType)
-      elsif view === "today" && orderType === "quotes"
-        @sales = Sale.where("date in (?) and order_type =?" , Date.today, "quote") 
-      elsif view === "weekly" && orderType === "quotes"
-        @sales = Sale.where("date in (?) and order_type =?" , today_week_start..today_week_end, "quote")
-      elsif view === "monthly" && orderType === "sales"
-        @sales = Sale.where("extract(month from date) = ? and order_type =?",Time.now.month,"sales") 
-      elsif view === "monthly" && orderType === "quotes"
-        @sales = Sale.where("extract(month from date) = ? and order_type =?",Time.now.month,"quote")
+      if view === "all" || view === "" && orderType === "sales"
+        @sales = Sale.where("order_type =?","sales")
+      elsif view === "today" && orderType === "sales" 
+        @sales = Sale.where("date in (?) and order_type =?"  , Date.today,"sales")  
+      elsif view == "weekly" && orderType === "sales" 
+        @sales = Sale.where("date in (?) and order_type =?", today_week_start..today_week_end,"sales")
+      elsif view == "monthly"  && orderType === "sales"
+        @sales = Sale.where("extract(month from date) = ? and order_type =?" ,Time.now.month,"sales") 
+      # elsif view === "today" && orderType === "quotes"
+      #   @sales = Sale.where("date in (?) and order_type =?" , Date.today, "quote") 
+      # elsif view === "weekly" && orderType === "quotes"
+      #   @sales = Sale.where("date in (?) and order_type =?" , today_week_start..today_week_end, "quote")
+      # elsif view === "monthly" && orderType === "sales"
+      #   @sales = Sale.where("extract(month from date) = ? and order_type =?",Time.now.month,"sales") 
+      # elsif view === "monthly" && orderType === "quotes"
+      #   @sales = Sale.where("extract(month from date) = ? and order_type =?",Time.now.month,"quote")
       end
     end
 
