@@ -67,15 +67,16 @@
           <th>Amount</th>
           <th>Type</th>
           <th>Due Date</th>
-          <th>Payment</th>
+          <th>Location</th>
           <th>Note</th>
+          <th>Confirm</th>
 
         </tr>
         <% @sales.each do | sale | %>
 
         <tr>
           <%=  %>
-          <td><%= Date.parse(sale.date.to_s) %></td>
+          <td><%= Date.parse(sale.date.to_s).strftime("%m/%d") %></td>
      
           <td><%= sale.quote_number %></td>
           <td><%=sale.by %></td>
@@ -83,8 +84,13 @@
           <td><%="$#{sale.amount}" %></td>
           <td><%=sale.product_type %></td>
           <td><%=sale.due_date %></td>
-          <td><%=sale.payment %></td>
+          <td><%="#{sale.address},#{sale.zip}" %></td>
           <td><%=sale.note %></td>
+          <td>
+            <%= link_to({action: "change_status",sale_id: sale.id},{method: :post}) do %>
+            <button class="btn btn-default">sales</button>
+            <% end %>
+          </td>
         </tr>
 
         <% end %>

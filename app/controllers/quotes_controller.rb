@@ -50,6 +50,32 @@ class QuotesController < ApplicationController
 
     sort_displayer(params[:view],params[:order_type])
 
-
   end
+
+  def change_status
+  
+ 
+    Sale.where( id:params[:sale_id]  ).update_all( order_type:'sales' )
+    redirect_to '/sales'
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end
