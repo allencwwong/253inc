@@ -1,26 +1,13 @@
-// var ready;
 
-// ready = function(){
-
-  $(document).ready(function(){
-
-$("#main-nav li").on('click',function(){
-         // remove classes from all
-      $("#main-nav li").removeClass("active");
-      // add class to the one we clicked
-      $(this).addClass("active");
-     
-   });
+  $(function() {
+    $( "#date" ).on('click', function(){
+      $(this).datepicker();
+    });
+    $( "#due-date" ).on('click', function(){
+      $(this).datepicker();
+    });
   });
 
-    //class="active"
-
-
-
-// }; // end
-
-// $(document).ready(ready);
-// $(document).on('page:load', ready);
 
 
 

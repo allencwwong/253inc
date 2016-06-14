@@ -1,0 +1,144 @@
+<% if @status === "sales" %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>Convert Quote to Sales </h1>
+
+        <%= form_tag "/quotes/#{@sale.id}", method: :patch do %>
+          <table class="table table-hover">
+
+      <tr>
+        <th><h3>Sales Infomation</h3></th>
+        <td colspan="2"><%= submit_tag "Convert to Sales" , class: "btn btn-primary" %></td>
+      </tr> 
+
+      <tr>
+        <td colspan="3"><%= label_tag :sale_date %><%= text_field_tag :sale_date , "#{DateTime.now.to_date}", class: "form-control", id: "date"%></td>
+      </tr>     
+
+      <tr>
+        <td colspan="3"><%= label_tag :payment_type %><%= select_tag(:payment_type, options_for_select(@payment_type),class: "form-control") %></td>
+      </tr>
+
+      <tr>
+        <td colspan="3"><%= label_tag :sale_amount %><%= text_field_tag :sale_amount , @sale.quote_amount, class: "form-control" %></td>
+      </tr> 
+
+      <tr>
+        <th colspan="3"><h3>Quote Infomation</h3></th>
+      </tr>    
+      <tr>    
+        <td><%= label_tag :date %><p><%= @sale.quote_date %></p></td>
+        <td colspan="2"><%= label_tag :due_date %><p><%= @sale.due_date %></p></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :quote_number %><p><%= @sale.quote_number %></p></td>
+        <td><%= label_tag :select_product_type %><p><%= @sale.product_type %></p></td>
+        <td><%= label_tag :amount %><p><%= @sale.quote_amount %></p></td>
+      </tr>
+
+      <tr>    
+        <td colspan="3"><%= label_tag :customer %><p><%= @sale.customer %></p></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :address %><p><%= @sale.address %></p></td>
+        <td><%= label_tag :state %><%= @sale.state %></td>
+        <td><%= label_tag :zip %><p><%= @sale.zip %></p></td>
+      </tr>
+
+
+      <tr>    
+        <td colspan="3"><%= label_tag :notes %><%= @sale.note %></td>
+      </tr>      
+ 
+  
+      <% end %>
+
+    </table>
+    </div>
+  </div>
+</div>    
+<% end %>
+
+<% if @status === "quote" %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>Add New Quote </h1>
+
+        <%= form_tag '/quotes', method: :patch do %>
+          <table class="table table-hover">
+
+      <tr>
+        <th><h3>Sales Infomation</h3></th>
+      </tr> 
+
+      <tr>
+        <td><%= label_tag :sale_date %><%= text_field_tag :sale_date , "#{DateTime.now.to_date}", class: "form-control", id: "date"%></td>
+      </tr>     
+
+      <tr>
+        <td><%= label_tag :payment_type %><%= select_tag(:payment_type, options_for_select(@payment_type),class: "form-control") %></td>
+      </tr>
+
+      <tr>
+        <td><%= label_tag :sale_amount %><%= text_field_tag :sale_amount , @sale.quote_amount, class: "form-control" %></td>
+      </tr> 
+
+      <tr>
+        <th><h3>Quote Infomation</h3></th>
+      </tr>    
+      <tr>    
+        <td><%= label_tag :date %><%= text_field_tag :date , @sale.quote_date, class: "form-control", id: "date"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :quote_number %><%= text_field_tag :quote_number , @sale.quote_number, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :select_product_type %><%= select_tag(:product_type, options_for_select(@product_type),class: "form-control") %></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :amount %><%= text_field_tag :amount , @sale.quote_amount, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :customer %><%= text_field_tag :customer , @sale.customer, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :address %><%= text_field_tag :address , @sale.address, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+
+        <td><%= label_tag :select_state %><%= select_tag(:state, options_for_select(@states),class: "form-control") %></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :zip %><%= text_field_tag :zip , @sale.zip, class: "form-control"%></td>
+      </tr>      
+      
+      <tr>    
+        <td><%= label_tag :due_date %><%= text_field_tag :due_date, nil, class: "form-control", id: "due-date"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :notes %><%= text_area :note, @sale.note, class: "form-control"%></td>
+      </tr>      
+
+      <tr>
+        <td><%= submit_tag "Add Quote" , class: "btn btn-primary" %></td>
+      </tr>  
+  
+      <% end %>
+
+    </table>
+    </div>
+  </div>
+</div>    
+<% end %>

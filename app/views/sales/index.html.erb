@@ -67,6 +67,7 @@
           <th>Amount</th>
           <th>Type</th>
           <th>Due Date</th>
+          <th>Location</th>
           <th>Payment</th>
           <th>Note</th>
 
@@ -75,14 +76,19 @@
 
         <tr>
           <%=  %>
-          <td><%= Date.parse(sale.date.to_s).strftime("%m/%d") %></td>
+          <td><%= Date.parse(sale.sale_date.to_s).strftime("%m/%d") %></td>
    
           <td><%= sale.sale_number %></td>
           <td><%=sale.by %></td>
           <td><%=sale.customer %></td>
-          <td><%="$#{sale.amount}" %></td>
+          <td><%="$#{sale.sale_amount}" %></td>
           <td><%=sale.product_type %></td>
           <td><%=sale.due_date %></td>
+          <td>
+            <% if sale.address %>
+            <%="#{sale.address},#{sale.state},#{sale.zip}" %>
+            <% end %>
+          </td>
           <td><%=sale.payment %></td>
           <td><%=sale.note %></td>
         </tr>

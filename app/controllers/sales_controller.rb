@@ -8,21 +8,30 @@ class SalesController < ApplicationController
     today_week_end = today_week_start + 6
 
     def sale_amount_sum(orderType,date,wStart,wEnd)
-      amount = 0
-      
+      sale_amount = 0
+      quote_amount = 0
+
       if wStart === nil
-        @sales = Sale.where("date in (?)",Date.today)
+        @sales = Sale.where("quote_date in (?)",Date.today)
       elsif wStart
-        @sales = Sale.where("date in (?)", wStart..wEnd)
+        @sales = Sale.where("quote_date in (?)", wStart..wEnd)
       end
 
       @sales.each do |sale|
-        if(sale.order_type === orderType)
-          amount+= sale.amount
+        if(sale.order_type  === "sales")
+          sale_amount+= sale.sale_amount
+        end
+
+        if(sale.order_type === "quote")
+          quote_amount+= sale.quote_amount  
         end
       end
       
-      return amount
+      if(orderType === "sales")
+        return sale_amount
+      else
+        return quote_amount
+      end
     end
 
 
@@ -39,11 +48,11 @@ class SalesController < ApplicationController
       if view === "all" || view === "" && orderType === "sales"
         @sales = Sale.where("order_type =?","sales")
       elsif view === "today" && orderType === "sales" 
-        @sales = Sale.where("date in (?) and order_type =?"  , Date.today,"sales")  
+        @sales = Sale.where("sale_date in (?) and order_type =?"  , Date.today,"sales")  
       elsif view == "weekly" && orderType === "sales" 
-        @sales = Sale.where("date in (?) and order_type =?", today_week_start..today_week_end,"sales")
+        @sales = Sale.where("sale_date in (?) and order_type =?", today_week_start..today_week_end,"sales")
       elsif view == "monthly"  && orderType === "sales"
-        @sales = Sale.where("extract(month from date) = ? and order_type =?" ,Time.now.month,"sales") 
+        @sales = Sale.where("extract(month from sale_date) = ? and order_type =?" ,Time.now.month,"sales") 
       # elsif view === "today" && orderType === "quotes"
       #   @sales = Sale.where("date in (?) and order_type =?" , Date.today, "quote") 
       # elsif view === "weekly" && orderType === "quotes"
