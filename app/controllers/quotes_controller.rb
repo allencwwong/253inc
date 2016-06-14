@@ -167,9 +167,8 @@ class QuotesController < ApplicationController
     end
     
     
-    @due_date = convert_to_datetime(params[:due_date])
-    puts "========="
-    puts @due_date
+    # @due_date = convert_to_datetime(params[:due_date])
+
     @note = params[:note]
     
     @order_type = params[:order_type]
