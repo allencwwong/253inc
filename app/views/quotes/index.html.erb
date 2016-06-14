@@ -4,7 +4,7 @@
 <nav id="subNav" class="navbar navbar-default">
   <div class="container">
    
-        <h1 class="navbar-text">253 Sales </h1>
+        <h1 class="navbar-text">253 Quotes </h1>
 
  <ul class="nav navbar-nav">       
     <!-- dropdown for time frame -->
@@ -21,7 +21,7 @@
 
   </ul>
 
-    <a href="/sales/new"><button class="btn btn-primary btn-default navbar-btn color-white navbar-right"><h4>Add</h4></button></a>
+    <a href="/quotes/new"><button class="btn btn-primary btn-default navbar-btn color-white navbar-right"><h4>Add</h4></button></a>
 
   </div>
 </nav>
@@ -61,36 +61,47 @@
       <table class="table table-hover">
         <tr>
           <th>Date</th>
-          <th>SN</th>
+          <th>QN</th>
           <th>By</th>
           <th>Customer</th>
           <th>Amount</th>
           <th>Type</th>
-          <th>Due Date</th>
+          <th>Due<br>Date</th>
           <th>Location</th>
-          <th>Payment</th>
           <th>Note</th>
+          <th>Confirm</th>
 
         </tr>
         <% @sales.each do | sale | %>
 
         <tr>
-          <%=  %>
-          <td><%= Date.parse(sale.sale_date.to_s).strftime("%m/%d") %></td>
-   
-          <td><%= sale.sale_number %></td>
+    
+          <td><%= Date.parse(sale.quote_date.to_s).strftime("%m/%d") %></td>
+     
+          <td><%= sale.quote_number %></td>
           <td><%=sale.by %></td>
           <td><%=sale.customer %></td>
-          <td><%="$#{sale.sale_amount}" %></td>
+          <td><%="$#{sale.quote_amount}" %></td>
           <td><%=sale.product_type %></td>
-          <td><%=sale.due_date %></td>
+          <td>
+              <% if sale.due_date %>
+                <%= Date.parse(sale.due_date.to_s).strftime("%m/%d") %>
+              <% end %>  
+          </td>
           <td>
             <% if sale.address %>
-            <%="#{sale.address},#{sale.state},#{sale.zip}" %>
+            <!-- https://www.google.com/maps/dir/253+E+Harris+Ave,+South+San+Francisco,+CA+94080/919+Athens+St,+CA+94112,+USA -->
+              <%= link_to "#{sale.address} #{sale.state} #{sale.zip}","https://www.google.com/maps/dir/253+E+Harris+Ave,+South+San+Francisco,+CA+94080/#{sale.address},+#{sale.state}+#{sale.zip}",target: "_blank" %>
+            <% else %>
+            <td><%= sale.state sale.zip %></td>  
+            <% end %>  
+          </td>
+          <td><%=sale.note %></td>
+          <td>
+            <%= link_to "/quotes/#{sale.id}/edit?status=sales" do %>
+            <button class="btn btn-default">sales</button>
             <% end %>
           </td>
-          <td><%=sale.payment %></td>
-          <td><%=sale.note %></td>
         </tr>
 
         <% end %>
@@ -100,5 +111,4 @@
 </div>
 </div>
 <% end %>
-
 

@@ -1,0 +1,61 @@
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>Add New Quote </h1>
+
+        <%= form_tag '/quotes', method: :post do %>
+          <table class="table table-hover">
+      <tr>    
+        <td><%= label_tag :date %><%= text_field_tag :date , "#{DateTime.now.to_date}", class: "form-control", id: "date"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :quote_number %><%= text_field_tag :quote_number , nil, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :select_product_type %><%= select_tag(:product_type, options_for_select(@product_type),class: "form-control") %></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :amount %><%= text_field_tag :amount , nil, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :customer %><%= text_field_tag :customer , nil, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :address %><%= text_field_tag :address , nil, class: "form-control"%></td>
+      </tr>
+
+      <tr>    
+
+        <td><%= label_tag :select_state %><%= select_tag(:state, options_for_select(@states),class: "form-control") %></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :zip %><%= text_field_tag :zip , nil, class: "form-control"%></td>
+      </tr>      
+      
+      <tr>    
+        <td><%= label_tag :due_date %><%= text_field_tag :due_date, nil, class: "form-control", id: "due-date"%></td>
+      </tr>
+
+      <tr>    
+        <td><%= label_tag :notes %><%= text_area :note, nil, class: "form-control"%></td>
+      </tr>      
+
+      <tr>
+        <td><%= submit_tag "Add Quote" , class: "btn btn-primary" %></td>
+      </tr>  
+  
+      <% end %>
+
+    </table>
+    </div>
+  </div>
+</div>    
+
